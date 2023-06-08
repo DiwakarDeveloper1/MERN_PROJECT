@@ -1,0 +1,260 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "E-Mart API",
+    "description": "E-Mart API Product",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],
+  "host": "localhost:3003",
+  "basePath": "/api/product",
+  "securityDefinitions": {
+    "AuthToken": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "The token for authentication"
+    }
+  },
+  "paths": {
+    "/id/:product_id": {
+      "get": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Get all product by Product_id"],
+        "description": "Returns all Product from database",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "required": true,
+            "description": "Body of user that we want to add",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/feature": {
+      "get": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Get all product by feature"],
+        "description": "Returns all Product from database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body of user that we want to add",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        }
+      }
+    },
+    "/update/:id": {
+      "get": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Update the product by id"],
+        "description": "Returns update the product in database",
+
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Body of user that we want to add",
+            "type": "string",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/create": {
+      "post": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["create a product"],
+        "description": "Returns Create a product",
+        "parameters": [
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Product Image",
+            "type": "file",
+            "name": "productPicture"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Product Name",
+            "type": "string",
+            "name": "name"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Product Description",
+            "type": "string",
+            "name": "description"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Price",
+            "type": "string",
+            "name": "price"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Id of Category ",
+            "type": "string",
+            "name": "category"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "description": "Available Quantity",
+            "type": "number",
+            "name": "quantity"
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        }
+      }
+    },
+
+    "/delete/:id": {
+      "delete": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Delete a product by using id"],
+        "description": "Returns Delete banner",
+        "parameters": [
+          {
+            "name": "id",
+            "body": "path",
+            "required": true,
+            "description": "delete product using product id",
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/productModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "productModel": {
+      "required": [
+        "name",
+        "slug",
+        "price",
+        "description",
+        "quantity",
+        "productPicture",
+        "review",
+        "category",
+        "categoryBy",
+        "updatedAt"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true,
+          "trim": true,
+          "index": true
+        },
+        "slug": {
+          "type": "string",
+          "required": true,
+          "unique": true
+        },
+        "price": {
+          "type": "number",
+          "required": true
+        },
+        "description": {
+          "type": "string",
+          "required": true,
+          "trim": true,
+          "index": true
+        },
+        "quantity": {
+          "type": "number",
+          "required": true
+        },
+        "productPicture": [
+          {
+            "img": { "type": "string" }
+          }
+        ],
+        "category": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

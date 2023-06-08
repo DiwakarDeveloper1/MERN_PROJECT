@@ -1,0 +1,131 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "E-Mart API",
+    "description": "E-Mart API banner",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],
+  "host": "localhost:3003",
+  "basePath": "/api/page",
+  "securityDefinitions": {
+    "AuthToken": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "The token for authentication"
+    }
+  },
+  "paths": {
+    "/get-banners": {
+      "get": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Get all banner"],
+        "description": "Returns all Product from database",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/pageModel"
+            }
+          }
+        }
+      }
+    },
+    "/add-banner": {
+      "post": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Post banner"],
+        "description": "Returns Post banners",
+        "parameters": [
+          {
+            "in": "formData",
+            "required": true,
+            "name": "img",
+            "type": "file",
+            "description": "Image of banner"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "name": "navigateTo",
+            "type": "string",
+            "description": "Link of banner"
+          },
+          {
+            "in": "formData",
+            "required": true,
+            "name": "name",
+            "type": "string",
+            "description": "Title of banner"
+          }
+        ],
+
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/pageModel"
+            }
+          }
+        }
+      }
+    },
+
+    "/delete-banner/:id": {
+      "delete": {
+        "x-swagger-router-controller": "controller",
+        "tags": ["Delete banner"],
+        "description": "Returns Delete banner",
+        "parameters": [
+          {
+            "name": "id",
+            "body": "path",
+            "required": true,
+            "description": "ID of banner that we want to find",
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "AuthToken": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/pageModel"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pageModel": {
+      "required": ["name", "img", "navigateTo"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": true
+        },
+        "img": {
+          "type": "string",
+          "required": true
+        },
+        "navigateTo": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  }
+}
